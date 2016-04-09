@@ -1,9 +1,0 @@
-.\main.o: main.c
-.\main.o: PLL.h
-.\main.o: input.h
-.\main.o: ADC.h
-.\main.o: Button.h
-.\main.o: Systick.h
-.\main.o: Sound.h
-.\main.o: DAC.h
-.\main.o: Timer2A.h
