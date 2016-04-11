@@ -12,7 +12,7 @@
 // Input: none
 // Output: none
 void initDAC(void){
-	unsigned int delay;
+	uint8_t delay;
 	SYSCTL_RCGC2 |= SYSCTL_RCGC2_GPIOB;
 	delay = SYSCTL_RCGC2;
 	(void)delay;
@@ -29,8 +29,8 @@ void initDAC(void){
 
 // **************DAC_Out*********************
 // output to DAC
-// Input: 4-bit data, 0 to 15 
+// Input: 6-bit data, 0 to 63
 // Output: none
-void DAC_Out(unsigned long data){
-  GPIO_PORTB_DATA = data & 0xF;
+void DAC_Out(uint32_t data){
+  GPIO_PORTB_DATA = data & 0x3F;
 }

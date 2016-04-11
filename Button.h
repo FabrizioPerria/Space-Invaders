@@ -5,6 +5,26 @@
 #ifndef __BUTTON_H
 #	define __BUTTON_H
 
+#include <stdint.h>
+
+/*
+BUTTON CONNECTION
+
+3.3V--------|
+             /
+            |
+						|
+PD0---------|
+            |
+            \
+						/  200 ohm
+						\
+						|
+						-
+					 GND
+					 
+*/
+
 #	define 	GPIO_PORTD_DATA				(*((volatile unsigned long *)0x400073FC))
 # define	GPIO_PORTD_LOCK				(*((volatile unsigned long *)0x40007520))
 #	define	GPIO_PORTD_CR					(*((volatile unsigned long *)0x40007524))
@@ -30,6 +50,6 @@
 // Input: none 
 // Output: 0 (not pressed) or 1 pressed)
 
-	unsigned long Button_In(void);
+	uint32_t Button_In(void);
 
 #endif

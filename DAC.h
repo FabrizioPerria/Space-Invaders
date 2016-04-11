@@ -5,6 +5,26 @@
 #ifndef __DAC_H
 #	define __DAC_H
 
+#include <stdint.h>
+
+/*
+DAC CONNECTION
+            100 ohm
+PB5->------/\/\/\---------|
+            200 ohm       |
+PB4->------/\/\/\---------|
+            400 ohm       |
+PB3->------/\/\/\---------|
+            800 ohm       |---------------speaker-------------|GND
+PB2->------/\/\/\---------|
+           1600 ohm       |  
+PB1->------/\/\/\---------|
+           3200 ohm       |
+PB0->------/\/\/\---------|
+
+The sounds are sampled at 11KHz in the amplitude range [0 - 63] (6 bits)
+*/
+
 #	define 	GPIO_PORTB_DATA			(*((volatile unsigned long *)0x400053FC))
 # define  GPIO_PORTB_LOCK 		(*((volatile unsigned long *)0x40005520))
 # define 	GPIO_PORTB_CR 			(*((volatile unsigned long *)0x40005524))
@@ -29,7 +49,7 @@
 // output to DAC
 // Input: 4-bit data, 0 to 15 
 // Output: none
-	void DAC_Out(unsigned long data);
+	void DAC_Out(uint32_t data);
   
 #endif
 

@@ -1,8 +1,6 @@
 #include "Sound.h"
 
-#define NUM_SAMPLES 2000
-
-static char *currentSound;
+static SoundWave *currentSound;				//read right to left -> pointer to const unsignned char
 static unsigned long currentIndex = 0;
 
 //------------initSound------------
@@ -21,8 +19,8 @@ void initSound(void)
 
 void TIMER2A_Handler(void)
 {
-	DAC_Out(currentSound[currentIndex++]);
-	if (currentIndex == NUM_SAMPLES) {
+	DAC_Out(currentSound->sound[currentIndex++]);
+	if (currentIndex == currentSound->size) {
 		TIMER2_IMR = 0x0;
 	}
 	TIMER2_ICR = 0x1;
@@ -35,7 +33,7 @@ void TIMER2A_Handler(void)
 void playSound(int event)
 {
 	//set the current sound to something
-	currentSound = sounds[event];
+	currentSound = &sounds[event];
 	currentIndex = 0;
 	TIMER2_IMR = 0x1;
 }

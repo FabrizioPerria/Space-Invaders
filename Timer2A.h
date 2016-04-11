@@ -1,6 +1,13 @@
 #ifndef __TIMER2A_H
 #	define __TIMER2A_H
 
+#include <stdint.h>
+
+/* 
+The timer 2A will trigger an interrupt periodically with the same rate as the samping frequency 
+of the sounds (11 KHz) and, for each tick, will send a new sample to the DAC.
+*/
+
 #	define TIMER2_CURRENT		(*((volatile unsigned long *) 0x40032048))
 #	define TIMER2_CTL				(*((volatile unsigned long *) 0x4003200C))
 #	define TIMER2_CFG				(*((volatile unsigned long *) 0x40032000))
@@ -22,6 +29,10 @@
 	
 #	define PERIOD_TIMER_2A	7271				//((80MHz) / (11 KHz)) -1
 
-void initTimer2A(void);
+//------------initTimer2A------------
+// Initialize the timer used to play sounds. 
+// Input: none
+// Output: none
+	void initTimer2A(void);
 
 #endif

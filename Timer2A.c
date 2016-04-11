@@ -27,7 +27,7 @@ void initTimer2A(void)
 	
 	//clear interrupt flag and arm the interrupt
 	TIMER2_ICR = 0x1;
-	TIMER2_IMR = 0x1;
+//	TIMER2_IMR = 0x1;
 	
 	//set priority for Timer2A ISR
 	NVIC_PRI5 |= TIMER_ISR_PRIORITY;

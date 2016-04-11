@@ -5,11 +5,20 @@
 // and return the result. 
 #ifndef __ADC_H
 #	define __ADC_H
+
+#include <stdint.h>
+
 /* 
 	The potentiometer has 3 pins:
 		1 - GND
 		2 - PE2
 		3 - Vcc (3.3V)
+		                   |-----------------------------|
+GND--------------------|  1                        3 |------3.3V
+                       |     SLIDE POTENTIOMETER     |
+PE2--------------------|  2                          |
+                       |-----------------------------|  
+		
  */
 
 #	define PORTE_AFSEL					(*((volatile unsigned long *)0x40024420))
@@ -39,10 +48,11 @@
 #	define SYSCTL_RCGC0_ADC0_CK 0x10000
 #	define SYSCTL_RCGC0_ADC0_SPD 0x300
 #	define ADC0_SSPRI_PRIORITY0 0x0123
-#	define ADC0_EMUX_POLL 			0xF0000;
+#	define ADC0_EMUX_POLL 			0xF0000
 # define AIN1									0x01
-#	define ADC0_SSCTL3_RIS_FLAG 0x6;
+#	define ADC0_SSCTL3_RIS_FLAG 0x6
 
+#	define ADC_THRESHOLD 5
 // This initialization function sets up the ADC 
 // Max sample rate: <=125,000 samples/second
 // SS3 triggering event: software trigger
@@ -54,6 +64,6 @@
 // Busy-wait Analog to digital conversion
 // Input: none
 // Output: 12-bit result of ADC conversion
-	unsigned long ADC0_In(void);
+	uint32_t ADC0_In(void);
 
 #endif

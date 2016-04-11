@@ -31,6 +31,6 @@ void initButton(void){
 // Input: none 
 // Output: 0 (not pressed) or 1 pressed)
 
-unsigned long Button_In(void){
+uint32_t Button_In(void){
 	return (GPIO_PORTD_DATA & BUTTON_BIT);
 }

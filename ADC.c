@@ -42,7 +42,7 @@ void initADC0(void){
 // Busy-wait Analog to digital conversion
 // Input: none
 // Output: 12-bit result of ADC conversion
-unsigned long ADC0_In(void){  
+uint32_t ADC0_In(void){  
 	unsigned int tmp = 0;
 	ADC_PSSI |= SEQUENCER3;
 	while (!(ADC_RIS & SEQUENCER3));	//wait for RIS set (means data ready)

@@ -1,5 +1,23 @@
 #include "Systick.h"
 #include "input.h"
+#include "Sound.h"
+#include "Video.h"
+
+static uint32_t speedEnemies;
+uint8_t semaphore;
+uint8_t reset = 0;
+extern uint8_t gameOver;
+
+/* 
+Calculate the absolute value of a number 
+Needed to detect slider changes over a threshold
+*/
+static int16_t abs(int16_t val)
+{
+	if (val < 0) 
+		val = -val;
+	return val;
+}
 
 //------------initSystick------------
 // Initialize the systick and define the reload value
@@ -21,14 +39,44 @@ void initSystick(void)
 // Output: none
 void SysTick_Handler(void)
 {
+	static uint32_t prevADCVal = ADC_THRESHOLD+1;
+	static uint8_t prevBtnVal = 0;
 	InputData data = readInputs();
-
 	//if ADC is different (over a threshold)
-	//	move my ship in the framebuffer
+	//	set a new current position
+	if(abs(data.ADC_data - prevADCVal) > ADC_THRESHOLD){
+		setPlayerPosition(data.ADC_data);
+		prevADCVal = data.ADC_data;
+	}
 	
 	//if the button is pressed
-	//  draw missile
-	//  start to play missile sound (arm timer2A)
+	if(data.Button_data && !prevBtnVal) {	//react on press
+		//  draw missile
+		if(!gameOver) {
+			shootPlayer();
+		} else {
+			gameOver = 0;
+			prevBtnVal = data.Button_data;
+			semaphore = 1;
+			reset = 1;
+			return;
+		}
+		//  start to play missile sound (arm timer2A)
+	}
+	prevBtnVal = data.Button_data;
 	
-	//move sprites in the framebuffer
+		
+	//play sounds
+	if(!gameOver){
+		//move sprites in the data structure
+		if (!speedEnemies){
+			setEnemiesPosition(1);
+			speedEnemies = getRemainingEnemies() * 100;
+		} else {
+			--speedEnemies;
+		}
+
+		semaphore = 1;
+		
+	}
 }
